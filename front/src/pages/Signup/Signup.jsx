@@ -3,6 +3,7 @@ import SigninAndUpLayout from '../../components/Layouts/SigninAndUpLayout/Signin
 import Top from '../../components/Layouts/SigninAndUpLayout/Top/Top';
 import Input from '../../components/Layouts/SigninAndUpLayout/Input/Input';
 import OrBar from '../../components/Layouts/SigninAndUpLayout/OrBar/OrBar';
+import { signup } from '../../apis/api/account';
 
 function Signup(props) {
     const emptyAccount = {
@@ -24,6 +25,10 @@ function Signup(props) {
         setIsAccountValuesEmpty(Object.values(account).includes(""))
     },[account]);
 
+    const handleSignupSubmit = () => {
+        signup(account);
+    }
+
     return (
         <SigninAndUpLayout>
             <Top>
@@ -39,7 +44,7 @@ function Signup(props) {
                     <Input placeholder={"성명"} name={"name"} changeAccount={changeAccount}/>
                     <Input placeholder={"사용자 이름"} name={"username"} changeAccount={changeAccount}/>
                     <Input type={"password"} placeholder={"비밀번호"} name={"password"} changeAccount={changeAccount}/>
-                    <button disabled={isAccountValuesEmpty}>가입</button>
+                    <button disabled={isAccountValuesEmpty} onClick={handleSignupSubmit}>가입</button>
                 </div>
             </Top>
         </SigninAndUpLayout>
