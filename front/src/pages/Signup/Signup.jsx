@@ -4,8 +4,11 @@ import Top from '../../components/Layouts/SigninAndUpLayout/Top/Top';
 import Input from '../../components/Layouts/SigninAndUpLayout/Input/Input';
 import OrBar from '../../components/Layouts/SigninAndUpLayout/OrBar/OrBar';
 import { signup } from '../../apis/api/account';
+import { useNavigate } from 'react-router-dom';
 
 function Signup(props) {
+    const navigate = useNavigate();
+
     const emptyAccount = {
         phoneAndEmail: "",
         name: "",
@@ -14,6 +17,8 @@ function Signup(props) {
     }
     const [ account, setAccount ] = useState(emptyAccount);
     const [ isAccountValuesEmpty, setIsAccountValuesEmpty ] = useState(true);
+    const [ errorMsg, setErrorMsg ] = useState("");
+
     const changeAccount = (name, value) => {
         setAccount({
             ...account,
@@ -25,8 +30,25 @@ function Signup(props) {
         setIsAccountValuesEmpty(Object.values(account).includes(""))
     },[account]);
 
-    const handleSignupSubmit = () => {
-        signup(account);
+    const handleSignupSubmit = async () => {
+        try {
+            await signup(account); // 상태코드가 2,300이 아닐경우 catch로 던져버림 
+            navigate("/accounts/login");
+
+        } catch(error) {
+            const responseErrorMsg = error.response.data;
+            const keys = Object.keys(responseErrorMsg);
+            if(keys.includes("username")) {
+                setErrorMsg(responseErrorMsg.username);
+            }else if(keys.includes("phoneAndEmail")) {
+                setErrorMsg(responseErrorMsg.phoneAndEmail)
+            }else if(keys.includes("name")) {
+                setErrorMsg(responseErrorMsg.name)
+            }else if(keys.includes("password")) {
+                setErrorMsg(responseErrorMsg.password)
+            }
+        }
+        
     }
 
     return (
@@ -45,6 +67,9 @@ function Signup(props) {
                     <Input placeholder={"사용자 이름"} name={"username"} changeAccount={changeAccount}/>
                     <Input type={"password"} placeholder={"비밀번호"} name={"password"} changeAccount={changeAccount}/>
                     <button disabled={isAccountValuesEmpty} onClick={handleSignupSubmit}>가입</button>
+                    <div>
+                        {errorMsg}
+                    </div>
                 </div>
             </Top>
         </SigninAndUpLayout>
