@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style';
-import { NAME, PASSWORD, PHONE_OR_EMAIL, USERNAME } from '../../../../\bconstants/regex';
-import { BsCheckCircle} from "react-icons/bs";
-import { ImCancelCircle} from 'react-icons/im';
+import { NAME, PASSWORD, PHONE_OR_EMAIL, USERNAME } from '../../../../constants/regex';
+import { ImCancelCircle } from "react-icons/im";
+import { BsCheckCircle } from "react-icons/bs";
 
 function Input({ type, placeholder, name, changeAccount }) {
     const [ isEmpty, setIsEmpty ] = useState(true);
@@ -26,13 +26,18 @@ function Input({ type, placeholder, name, changeAccount }) {
             case "password": regex = PASSWORD; break;
             default: regex = null;
         }
+
         if(!!regex && !regex.test(value)) {
             setInputState(<><ImCancelCircle /></>);
+
         }else if(!!regex && regex.test(value)) {
             setInputState(<><BsCheckCircle /></>);
+
         }else {
             setInputState("");
         }
+
+        
     }
 
     const handleInputOnFocus = () => {
@@ -41,12 +46,15 @@ function Input({ type, placeholder, name, changeAccount }) {
 
     useEffect(() => {
         setIsEmpty(!inputValue);
-    }, [inputValue]);
+    }, [inputValue])
 
     return (
         <div css={S.SLayout}>
             <label css={S.SInput(isEmpty)}>
-                <input type={type} name={name} onChange={handleInputChange} onBlur={handleInputOnblur} onFocus={handleInputOnFocus}/>    {/* onBlur : 포커스를 벗어났을때 */}
+                <input type={type} name={name} 
+                onChange={handleInputChange} 
+                onBlur={handleInputOnblur}
+                onFocus={handleInputOnFocus} /> {/* onBlur : 포커스를 벗어났을때 */}
                 <span>{placeholder}</span>
             </label>
             <div css={S.SStateBox}>

@@ -1,4 +1,4 @@
-import instance from "../utils/instance";
+import instance from "../utils/instance"
 
 export const signup = async (account) => {
     const response = await instance.post("/api/v1/auth/user", account);

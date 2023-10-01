@@ -12,12 +12,11 @@ export const SLayout = css`
 `;
 
 export const SInput = (isEmpty) => css`
-    display: flex;
     position: relative;
     flex-grow: 1;
     padding: ${isEmpty ? "9px 0px 7px 8px" : "14px 0px 2px 8px"};
     transition: all 0.1s ease;
-    
+
     & > input {
         border: none;
         outline: none;
@@ -37,6 +36,6 @@ export const SInput = (isEmpty) => css`
 `;
 
 export const SStateBox = css`
-    padding-right: 0px 8px;
-    background-color: #fafafa;
+    padding: 0px 8px;
+    
 `;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import SigninAndUpLayout from '../../components/Layouts/SigninAndUpLayout/SigninAndUpLayout';
-import Top from '../../components/Layouts/SigninAndUpLayout/Top/Top';
-import Input from '../../components/Layouts/SigninAndUpLayout/Input/Input';
-import OrBar from '../../components/Layouts/SigninAndUpLayout/OrBar/OrBar';
+import SignInAndUpLayout from '../../components/Layouts/SignInAndUpLayout/SignInAndUpLayout';
+import Top from '../../components/Layouts/SignInAndUpLayout/Top/Top';
+import Input from '../../components/Layouts/SignInAndUpLayout/Input/Input';
+import OrBar from '../../components/Layouts/SignInAndUpLayout/OrBar/OrBar';
 import { signup } from '../../apis/api/account';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,51 +29,54 @@ function Signup(props) {
     useEffect(() => {
         // includes : 요소가 배열안에 존재하는 경우에만 True 반환
         setIsAccountValuesEmpty(Object.values(account).includes(""))
-    },[account]);
+    }, [account])
 
     const handleSignupSubmit = async () => {
-        try {
+        try{
             await signup(account); // 상태코드가 2,300이 아닐경우 catch로 던져버림 
             navigate("/accounts/login");
 
         } catch(error) {
             const responseErrorMsg = error.response.data;
             const keys = Object.keys(responseErrorMsg);
+
             if(keys.includes("username")) {
                 setErrorMsg(responseErrorMsg.username);
-            }else if(keys.includes("phoneOrEmail")) {
-                setErrorMsg(responseErrorMsg.phoneOrEmail)
+            }else if(keys.includes("phoneAndEmail")) {
+                setErrorMsg(responseErrorMsg.phoneOrEmail);
             }else if(keys.includes("name")) {
-                setErrorMsg(responseErrorMsg.name)
+                setErrorMsg(responseErrorMsg.name);
             }else if(keys.includes("password")) {
-                setErrorMsg(responseErrorMsg.password)
+                setErrorMsg(responseErrorMsg.password);
             }
         }
-        
     }
 
     return (
-        <SigninAndUpLayout>
+        <SignInAndUpLayout>
             <Top>
                 <div>
                     <div>
                         친구들의 사진과 동영상을 보려면 가입하세요.
                     </div>
                     <button>
-                        KaKao로 로그인
+                        Kakao로 로그인
                     </button>
                     <OrBar />
-                    <Input placeholder={"휴대폰 번호 또는 이메일 주소"} name={"phoneOrEmail"} changeAccount={changeAccount}/>
-                    <Input placeholder={"성명"} name={"name"} changeAccount={changeAccount}/>
-                    <Input placeholder={"사용자 이름"} name={"username"} changeAccount={changeAccount}/>
-                    <Input type={"password"} placeholder={"비밀번호"} name={"password"} changeAccount={changeAccount}/>
-                    <button disabled={isAccountValuesEmpty} onClick={handleSignupSubmit}>가입</button>
+                    <Input placeholder={"휴대폰 번호 또는 이메일 주소"} name={"phoneOrEmail"} changeAccount={changeAccount} />
+                    <Input placeholder={"성명"} name={"name"} changeAccount={changeAccount} />
+                    <Input placeholder={"사용자 이름"} name={"username"} changeAccount={changeAccount} />
+                    <Input type={"password"} placeholder={"비밀번호"} name={"password"} changeAccount={changeAccount} />
+                    <button onClick={handleSignupSubmit} disabled={isAccountValuesEmpty}>
+                        가입
+                    </button>
                     <div>
                         {errorMsg}
                     </div>
                 </div>
             </Top>
-        </SigninAndUpLayout>
+
+        </SignInAndUpLayout>
     );
 }
 

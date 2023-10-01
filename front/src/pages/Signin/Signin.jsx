@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import SigninAndUpLayout from '../../components/Layouts/SigninAndUpLayout/SigninAndUpLayout';
-import Top from '../../components/Layouts/SigninAndUpLayout/Top/Top';
-import Input from '../../components/Layouts/SigninAndUpLayout/Input/Input';
-import OrBar from '../../components/Layouts/SigninAndUpLayout/OrBar/OrBar';
-import { signin } from '../../apis/api/account';
-/** @jsxImportSource @emotion/react */
-import * as S from './Style';
+import SignInAndUpLayout from '../../components/Layouts/SignInAndUpLayout/SignInAndUpLayout';
+import Top from '../../components/Layouts/SignInAndUpLayout/Top/Top';
+import Input from '../../components/Layouts/SignInAndUpLayout/Input/Input';
+import OrBar from '../../components/Layouts/SignInAndUpLayout/OrBar/OrBar';
 import { useNavigate } from 'react-router-dom';
+import { signin } from '../../apis/api/account';
 
-function Signin(props) {
+function Signin() {
     const navigate = useNavigate();
 
     const emptyAccount = {
         phoneOrEmailOrUsername: "",
         loginPassword: ""
     }
+
     const [ account, setAccount ] = useState(emptyAccount);
     const [ isAccountValuesEmpty, setIsAccountValuesEmpty ] = useState(true);
     const [ errorMsg, setErrorMsg ] = useState("");
@@ -28,18 +27,18 @@ function Signin(props) {
 
     useEffect(() => {
         setIsAccountValuesEmpty(Object.values(account).includes(""))
-    },[account]);
+    }, [account])
 
     const handleSigninSubmit = async () => {
         try {
             const response = await signin(account); // response 에 정보를 담아둔 JWT 토큰이 저장됨
             localStorage.setItem("accessToken", "Bearer " + response.data); // JWT 를 사용하기위한 규칙 Bearer 를 토큰 앞에 붙여줘야함
-            console.log(localStorage);
             navigate("/");
-        } catch (error) {
+        } catch(error) {
             setErrorMsg(error.response.data.errorMessage);
         }
     }
+
 
     return (
         <SigninAndUpLayout>
