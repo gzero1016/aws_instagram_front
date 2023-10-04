@@ -10,6 +10,7 @@ function App() {
   return (
     <RootLayout>
       <Routes>
+                {/* 어떠한 라우터로 들어가더라도 AuthRoute를 한번 탄다. */}
         <Route path='/' element={ <AuthRoute element={ <div>HOME</div>} /> } />
         <Route path='/accounts/emailsignup' element={ <AuthRoute element={ <Signup /> }/> } />
         <Route path='/accounts/login' element={ <AuthRoute element={ <Signin /> }/> } />

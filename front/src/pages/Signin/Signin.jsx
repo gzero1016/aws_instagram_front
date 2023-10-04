@@ -3,11 +3,13 @@ import SignInAndUpLayout from '../../components/Layouts/SignInAndUpLayout/SignIn
 import Top from '../../components/Layouts/SignInAndUpLayout/Top/Top';
 import Input from '../../components/Layouts/SignInAndUpLayout/Input/Input';
 import OrBar from '../../components/Layouts/SignInAndUpLayout/OrBar/OrBar';
-import { useNavigate } from 'react-router-dom';
 import { signin } from '../../apis/api/account';
+/** @jsxImportSource @emotion/react */
+import * as S from './Style';
+import { useQueryClient } from 'react-query';
 
 function Signin() {
-    const navigate = useNavigate();
+    const queryClient = useQueryClient();   // 클라이언트에 접근하기위해 생성해준다.
 
     const emptyAccount = {
         phoneOrEmailOrUsername: "",
@@ -33,7 +35,7 @@ function Signin() {
         try {
             const response = await signin(account); // response 에 정보를 담아둔 JWT 토큰이 저장됨
             localStorage.setItem("accessToken", "Bearer " + response.data); // JWT 를 사용하기위한 규칙 Bearer 를 토큰 앞에 붙여줘야함
-            navigate("/");
+            window.location.reload();
         } catch(error) {
             setErrorMsg(error.response.data.errorMessage);
         }
@@ -41,7 +43,7 @@ function Signin() {
 
 
     return (
-        <SigninAndUpLayout>
+        <SignInAndUpLayout>
             <Top>
                 <div css={S.SLayout}>
                     <div>
@@ -58,7 +60,7 @@ function Signin() {
                     </div>
                 </div>
             </Top>
-        </SigninAndUpLayout>
+        </SignInAndUpLayout>
     );
 }
 
