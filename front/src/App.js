@@ -4,6 +4,7 @@ import RootLayout from './components/Layouts/RootLayout/RootLayout';
 import Signup from './pages/Signup/Signup';
 import Signin from './pages/Signin/Signin';
 import AuthRoute from './auth/AuthRoute';
+import Home from './pages/Home/Home';
 
 function App() {
 
@@ -11,10 +12,9 @@ function App() {
     <RootLayout>
       <Routes>
                 {/* 어떠한 라우터로 들어가더라도 AuthRoute를 한번 탄다. */}
-        <Route path='/' element={ <AuthRoute element={ <div>HOME</div>} /> } />
+        <Route path='/' element={ <AuthRoute element={ <Home /> } /> } />
         <Route path='/accounts/emailsignup' element={ <AuthRoute element={ <Signup /> }/> } />
         <Route path='/accounts/login' element={ <AuthRoute element={ <Signin /> }/> } />
-        
         <Route path='/:username' element={<AuthRoute element={ <div>test2</div> }/>} />
         <Route path='/explore' element={<div>test3</div>} />
       </Routes>

@@ -6,10 +6,8 @@ import OrBar from '../../components/Layouts/SignInAndUpLayout/OrBar/OrBar';
 import { signin } from '../../apis/api/account';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style';
-import { useQueryClient } from 'react-query';
 
 function Signin() {
-    const queryClient = useQueryClient();   // 클라이언트에 접근하기위해 생성해준다.
 
     const emptyAccount = {
         phoneOrEmailOrUsername: "",
