@@ -7,6 +7,8 @@ import ModalBody from '../ModalBody/ModalBody';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import profileImg from '../../../assets/profileImg.jpeg';
+import { uploadFeed } from '../../../apis/api/feed';
 
 function SelectFeedImg({ setFiles, setPage }) {
     const fileInputRef = useRef();
@@ -84,13 +86,40 @@ function ReviewFeedImg({ files }) {
     )
 }
 
+function FeedDetail({ isShow, setContent }) {
+
+    useEffect(() => {
+
+    });
+
+    const handleContentOnChange = (e) => {
+        setContent(e.target.value);
+    }
+
+    return (
+        <div css={S.FeedDetailContainer(isShow)}>
+            <div css={S.ProfileContainer}>
+                <div css={S.ProfileImgBox}>
+                    <img src={profileImg} />
+                </div>
+                <div css={S.ProfileName}>o_____og</div>
+            </div>
+            <textarea css={S.FeedContent} name="content" placeholder='문구를 입력하세요...' onChange={handleContentOnChange} ></textarea>
+        </div>
+    )
+}
+
 function AddFeedModal(props) {
     const [ page, setPage ] = useState(1);
-    const [ files, setFiles ] = useState([]);
     const [ bodyComponent, setBodyComponent ] = useState(<></>);
-
+    const [ isShowFeedDetail, setIsShowFeedDetail ] = useState(false);
+    
+    const [ title, setTitle ] = useState("");
     const [ leftButton, setLeftButton ] = useState(<div></div>);
     const [ rightButton, setRightButton ] = useState(<div></div>);
+
+    const [ files, setFiles ] = useState([]);
+    const [ content, setContent ] = useState("");
 
     const BackButton = () => {
         return(
@@ -108,29 +137,68 @@ function AddFeedModal(props) {
         )
     }
 
+    const SubmitButton = () => {
+        const handleSubmitClick = async () => {
+            const formData = new FormData();
+            formData.append("content", content);
+
+            const fileArray = Array.from(files);
+            fileArray.forEach(file => {
+                formData.append("files", file);
+            })
+            
+            try {
+                const response = await uploadFeed(formData);
+                console.log(response);
+            }catch(error) {
+                console.log(error);
+            }
+        }
+
+        return (
+            <div onClick={handleSubmitClick}>
+                <span css={S.NextButton}>공유하기</span>
+            </div>
+        )
+    }
+
     useEffect(() => {
         switch(page) {
             case 1:
                 setBodyComponent(<SelectFeedImg setFiles={setFiles} setPage={setPage} />);
+                setTitle("새 게시물 만들기");
                 setLeftButton(<div></div>);
                 setRightButton(<div></div>);
                 break;
             case 2:
-                setBodyComponent(<ReviewFeedImg files={files} />);
+                setBodyComponent(
+                <>
+                    <ReviewFeedImg files={files} />
+                    <FeedDetail isShow={isShowFeedDetail} setContent={setContent}/>
+                </>);
+                setTitle("미리보기");
+                setIsShowFeedDetail(false);
                 setLeftButton(BackButton());
-                setRightButton(NextButton())
+                setRightButton(NextButton());
                 break;
             case 3:
-                setBodyComponent(<><ReviewFeedImg files={files} /><div><ReviewFeedImg files={files} /></div></>);
+                setBodyComponent(
+                <>
+                    <ReviewFeedImg files={files} />
+                    <FeedDetail isShow={isShowFeedDetail} setContent={setContent}/>
+                </>);
+                setTitle("새 게시물 만들기");
+                setIsShowFeedDetail(true);
                 setLeftButton(BackButton());
+                setRightButton(SubmitButton);
                 break;
             default:
         }
-    }, [page]); // page 번호가 바뀔때마다 상태 변화
+    }, [page, isShowFeedDetail, content]); // page 번호가 바뀔때마다 상태 변화
 
     return (
         <ModalLayout>
-            <ModalHeader title={"새 게시물 만들기"} leftButton={leftButton} rightButton={rightButton}/>
+            <ModalHeader title={title} leftButton={leftButton} rightButton={rightButton}/>
             <ModalBody>
                 {bodyComponent}
             </ModalBody>

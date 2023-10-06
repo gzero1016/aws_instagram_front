@@ -5,7 +5,7 @@ import * as S from './Style';
 function NavItem({ onclick, children }) {
 
     return (
-        <div css={S.SLayout} onClick={onclick}>
+        <div css={S.SLayout} onClick={onclick} >
             {children}
         </div>
     );

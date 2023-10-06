@@ -6,14 +6,15 @@ export const SLayout = css`
     justify-content: center;
     align-items: center;
     margin: 4px 0px;
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 12px;
     width: 48px;
     height: 48px;
-
     font-size: 24px;
     cursor: pointer;
-    &:active {
+
+    &:active,
+    &:hover {
         background-color: #eee;
         font-size: 23px;
         color: #555;

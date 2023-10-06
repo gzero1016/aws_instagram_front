@@ -65,3 +65,50 @@ export const ImgBox = css`
         width: 100%;
     }
 `;
+
+export const FeedDetailContainer = (isShow) => css`
+    transition: all 0.5s ease;
+    border-left: 1px solid #dbdbdb;
+    width: ${isShow ? "300" : "0"}px;
+    opacity: ${isShow ? "1" : "0"}px; // 투명도
+    height: 396px;
+    overflow: hidden;
+`;
+
+export const ProfileContainer = css`
+    display: flex;
+    align-items: center;
+    padding : 0px 16px;
+    width: 100%;
+    height: 60px;
+`;
+
+export const ProfileImgBox = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    overflow: hidden;
+
+    & > img {
+        width: 100%;
+    }
+`;
+
+export const ProfileName = css`
+    font-size: 14px;
+    font-weight: 600;
+`;
+
+export const FeedContent = css`
+    padding: 0px 16px;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 300px;
+    resize: none;
+    overflow-y: auto;
+`;

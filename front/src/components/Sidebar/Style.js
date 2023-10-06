@@ -6,3 +6,9 @@ export const SLayout = css`
     width: 73px;
     height: 100%;
 `;
+
+export const SImg = css`
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+`;
