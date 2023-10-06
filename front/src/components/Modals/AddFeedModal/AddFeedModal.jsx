@@ -148,10 +148,11 @@ function AddFeedModal(props) {
             })
             
             try {
-                const response = await uploadFeed(formData);
-                console.log(response);
+                await uploadFeed(formData);
+                window.location.replace("/");
             }catch(error) {
                 console.log(error);
+                window.location.reload();
             }
         }
 

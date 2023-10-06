@@ -16,3 +16,10 @@ export const SContainer = css`
     background-color: #fff;
     overflow: hidden;
 `;
+
+export const SClose = css`
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+`;
