@@ -5,6 +5,7 @@ import { FiInstagram } from 'react-icons/fi';
 import NavItem from './NavItem/NavItem';
 import { useRecoilState } from 'recoil';
 import { showModalState } from '../../store/atoms/ModalState';
+import { showProfileState } from '../../store/atoms/ProfileState';
 import AddFeedModal from '../Modals/AddFeedModal/AddFeedModal';
 import profileImg from '../../assets/profileImg.jpeg';
 

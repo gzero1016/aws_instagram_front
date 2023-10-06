@@ -102,7 +102,7 @@ function FeedDetail({ isShow, setContent }) {
                 <div css={S.ProfileImgBox}>
                     <img src={profileImg} />
                 </div>
-                <div css={S.ProfileName}>o_____og</div>
+                <div css={S.ProfileName}>o______og</div>
             </div>
             <textarea css={S.FeedContent} name="content" placeholder='문구를 입력하세요...' onChange={handleContentOnChange} ></textarea>
         </div>
